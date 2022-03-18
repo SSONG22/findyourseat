@@ -1,15 +1,15 @@
 package com.songi.findyourseat.domain.studyRoom.domain;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-//@Builder
-@EqualsAndHashCode(of = {"id", "number", "userInfo"})
+@Getter
+@EqualsAndHashCode(of = {"id", "number"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seat {
     @Id
@@ -20,7 +20,11 @@ public class Seat {
 
     private String userInfo;
 
-    private boolean isEmpty = true;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "study_room_id")
+    private StudyRoom studyRoom;
+
+    private boolean isEmpty = Boolean.TRUE;
 
     protected Seat(int number) {
         this.number = number;
@@ -36,11 +40,10 @@ public class Seat {
     }
 
     public void checkOut(String userInfo) {
-        if (this.userInfo.equals(userInfo)) {
+        if (!this.userInfo.equals(userInfo)) {
             throw new RuntimeException("different userInfo");
         }
         this.userInfo = userInfo;
         isEmpty = true;
     }
-
 }

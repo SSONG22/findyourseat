@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,14 +19,12 @@ public class Seats {
             fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST,
             orphanRemoval = true)
-
     private Set<Seat> seats;
 
     protected Seats(int size) {
         this.seats = new HashSet<>();
-        for (int number = 1; number <= size; number++) {
-            seats.add(new Seat(number));
-        }
+        IntStream.rangeClosed(1, size)
+                .forEach(number -> seats.add(new Seat(number)));
     }
 
     protected Seats(Set<Seat> seats) {
@@ -55,5 +54,15 @@ public class Seats {
 
     public int count() {
         return seats.size();
+    }
+
+    public void remove(Seat seat) {
+        seats.remove(seat);
+    }
+
+    public int availableSeats() {
+        return (int) seats.stream()
+                .filter(seat -> seat.isEmpty())
+                .count();
     }
 }
