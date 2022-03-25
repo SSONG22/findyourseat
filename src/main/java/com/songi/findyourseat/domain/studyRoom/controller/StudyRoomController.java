@@ -21,7 +21,7 @@ public class StudyRoomController {
     @PostMapping("/{studyRoomId}/in/{seatId}")
     public ResponseEntity<String> checkIn(
             @PathVariable Long studyRoomId,
-            @PathVariable Long seatId,
+            @PathVariable Integer seatId,
             @RequestBody String userId
     ) {
         studyRoomService.checkIn(studyRoomId, seatId, userId);
