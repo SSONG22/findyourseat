@@ -17,17 +17,19 @@ public class StudyRoomService {
 
     private final StudyRoomRepository studyRoomRepository;
 
+    @Transactional
     public void checkIn(Long studyRoomId, Integer seatId, String userId) {
         StudyRoom studyRoom = getStudyRoom(studyRoomId);
         studyRoom.checkIn(seatId, userId);
     }
 
+    @Transactional
     public void checkOut(Long studyRoomId, Integer seatId, String userId) {
         StudyRoom studyRoom = getStudyRoom(studyRoomId);
         studyRoom.checkOut(seatId, userId);
     }
 
-    private StudyRoom getStudyRoom(Long studyRoomId) {
+    public StudyRoom getStudyRoom(Long studyRoomId) {
         return studyRoomRepository.findById(studyRoomId).orElseThrow(() -> new RuntimeException("not found study room"));
     }
 

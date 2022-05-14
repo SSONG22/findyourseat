@@ -20,10 +20,6 @@ public class Seat {
 
     private String userInfo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_room_id")
-    private StudyRoom studyRoom;
-
     private boolean isEmpty = Boolean.TRUE;
 
     protected Seat(int number) {

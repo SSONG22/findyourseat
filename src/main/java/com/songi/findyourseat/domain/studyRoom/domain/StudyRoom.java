@@ -6,11 +6,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Getter
 @Table(name = "STUDY_ROOM")
-@ToString
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class StudyRoom {
@@ -44,5 +43,9 @@ public class StudyRoom {
 
     public List<Seat> seats() {
         return new ArrayList<>(seats.getSeats());
+    }
+
+    public Seat getSeat(int number) {
+        return seats.getSeat(number);
     }
 }

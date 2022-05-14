@@ -17,8 +17,7 @@ import java.util.stream.IntStream;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seats {
 
-    @OneToMany(mappedBy = "studyRoom",
-            fetch = FetchType.LAZY,
+    @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST,
             orphanRemoval = true)
     private Set<Seat> seats;
@@ -47,7 +46,7 @@ public class Seats {
                 .checkOut(userInfo);
     }
 
-    private Seat getSeat(int number) {
+    public Seat getSeat(int number) {
         return seats.stream()
                 .filter(seat -> seat.isSameSeat(number))
                 .findFirst()
@@ -67,4 +66,5 @@ public class Seats {
                 .filter(seat -> seat.isEmpty())
                 .count();
     }
+
 }

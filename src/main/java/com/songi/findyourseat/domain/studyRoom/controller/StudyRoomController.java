@@ -1,6 +1,7 @@
 package com.songi.findyourseat.domain.studyRoom.controller;
 
 import com.songi.findyourseat.domain.studyRoom.controller.dto.StudyRoomSeatsInfo;
+import com.songi.findyourseat.domain.studyRoom.domain.StudyRoom;
 import com.songi.findyourseat.domain.studyRoom.service.StudyRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,10 @@ public class StudyRoomController {
 
     private final StudyRoomService studyRoomService;
 
-    @GetMapping("/seats")
-    public ResponseEntity<StudyRoomSeatsInfo> getSeatsInfo() {
-
-        return ResponseEntity.ok(StudyRoomSeatsInfo.from());
+    @GetMapping("/{studyRoomId}/seats")
+    public ResponseEntity<StudyRoomSeatsInfo> getSeatsInfo(@PathVariable Long studyRoomId) {
+        StudyRoom studyRoom = studyRoomService.getStudyRoom(studyRoomId);
+        return ResponseEntity.ok(StudyRoomSeatsInfo.of(studyRoomId, studyRoom.getName(), studyRoomService.seatsInfo(studyRoomId)));
     }
 
     @PostMapping("/{studyRoomId}/in/{seatId}")
@@ -31,10 +32,10 @@ public class StudyRoomController {
     @PostMapping("/{studyRoomId}/out/{seatId}")
     public ResponseEntity<String> checkOut(
             @PathVariable Long studyRoomId,
-            @PathVariable Long seatId,
+            @PathVariable Integer seatId,
             @RequestBody String userId
     ) {
-//        studyRoomService.checkout();
+        studyRoomService.checkOut(studyRoomId, seatId, userId);
         return ResponseEntity.ok("success");
     }
 }

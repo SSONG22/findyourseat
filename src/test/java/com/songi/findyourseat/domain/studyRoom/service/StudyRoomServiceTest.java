@@ -1,10 +1,12 @@
 package com.songi.findyourseat.domain.studyRoom.service;
 
+import com.songi.findyourseat.domain.studyRoom.repository.StudyRoomRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,11 +17,12 @@ class StudyRoomServiceTest {
     @Autowired
     private StudyRoomService studyRoomService;
 
-//    @Mock private
+    @MockBean private StudyRoomRepository studyRoomRepository;
 
     @DisplayName("")
     @Test
     void checkIn() {
+
     }
 
     @Test
